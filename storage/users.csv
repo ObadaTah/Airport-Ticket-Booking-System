@@ -1,4 +1,7 @@
-username,password,role
-1
-asd
-asd
+id,name,email,password,role
+1,Obada,obadatabhoub20@gmail.com,123456,Manager
+2,Obada,obadatabhoub21@gmail.com,123456,Manager
+3,Obada,obadatabhoub22@gmail.com,123456,Manager
+10,momo,qwe@123.com,123,Passenger
+11,qwe,qwe,qwe,Passenger
+12,www,www,ww,Passenger

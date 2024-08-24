@@ -1,1 +1,1 @@
-bookingId,flightNumber,username
+bookingId,flightNumber,userId,bookingDate,status

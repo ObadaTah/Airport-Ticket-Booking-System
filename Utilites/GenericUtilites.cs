@@ -11,28 +11,29 @@ public static partial class GenericUtilites
         Console.WriteLine("3. Exit");
 
 
-        return askValidInt(3);
+        return AskValidInt(3);
     }
 
 
-    public static bool RequestLogin()
+    public static User RequestLogin()
     {
 
         Console.Write("Enter your Email: ");
         string? email = Console.ReadLine();
         Console.Write("Enter your password: ");
         string? password = Console.ReadLine();
-
-        while (!User.CheckUserCredintials(email, password))
+        User user = User.CheckUserCredintials(email, password);
+        while (user == null)
         {
             Console.WriteLine("Invalid Credintials. Please Try Again");
             return RequestLogin();
         }
-        return true;
+        return user;
     }
 
-    public static bool RequestRegister()
+    public static User RequestRegister()
     {
+
         Console.Write("Enter your Name: ");
         string? name = Console.ReadLine();
         Console.Write("Enter your Email: ");
@@ -40,14 +41,20 @@ public static partial class GenericUtilites
         Console.Write("Enter your password: ");
         string? password = Console.ReadLine();
 
-        while (!User.RegisterUser(name, email, password))
+        User user;
+        try
         {
-            Console.WriteLine("Invalid Credintials. Please Try Again");
+            user = User.RegisterUser(name, email, password);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
             return RequestRegister();
         }
-        return true;
+       
+        return user;
     }
-    public static int askValidInt(int max)
+    public static int AskValidInt(int max)
     {
         Console.Write("Enter your choice: ");
 
@@ -57,7 +64,7 @@ public static partial class GenericUtilites
             if (choice == null)
             {
                 Console.WriteLine("Invalid choice. Please try again.");
-                return askValidInt(max);
+                return AskValidInt(max);
             }
             int num = int.Parse(choice);
             if (num > 0 && num <= max)
@@ -67,13 +74,13 @@ public static partial class GenericUtilites
             else
             {
                 Console.WriteLine("Invalid choice. Please try again.");
-                return askValidInt(max);
+                return AskValidInt(max);
             }
         }
         catch (Exception)
         {
             Console.WriteLine("Invalid choice. Please try again.");
-            return askValidInt(max);
+            return AskValidInt(max);
         }
     }
 }

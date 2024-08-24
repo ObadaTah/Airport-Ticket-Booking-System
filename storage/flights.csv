@@ -1,1 +1,1 @@
-flightNumber,origin,destination,departureTime,arrivalTime,price
+flightNumber,price,destination,departureAirport,arrivalAirport,departureDate,class

@@ -11,7 +11,6 @@ public static class FileSystemUtilites
     {
         string path = Path.Combine(GetPath(), "storage");
         path = Path.Combine(path, fileName);
-        Console.WriteLine(path);
         if (!File.Exists(path))
         {
             using (File.Create(path)) { };
@@ -83,6 +82,12 @@ public static class FileSystemUtilites
                 data.Add(s);
             }
         }
-        return data;
+        return data[1..^0];
+    }
+
+    internal static int GetNextId(string filename)
+    {
+        string lastEntry = ReadFromFile(filename)[^1].Split(',')[0];
+        return Int32.Parse(lastEntry)+1;
     }
 }

@@ -1,9 +1,10 @@
 ﻿using Airport_Ticket_Booking_System.Bookings;
-
+using Airport_Ticket_Booking_System.Utilites;
 namespace Airport_Ticket_Booking_System.Users;
 
 public class User
 {
+    public static string header = "id,name,email,password,role";
     public int Id { get; set; }
     public string Name { get; set; } = string.Empty;
     public string Email { get; set; } = string.Empty;
@@ -12,34 +13,74 @@ public class User
     public List<Booking> Bookings { get; set; } = new();
 
 
-    public static Boolean CheckUserCredintials(string? email, string? password)
+    public static User? CheckUserCredintials(string? email, string? password)
     {
 
         if (String.IsNullOrEmpty(email) || String.IsNullOrEmpty(password))
-            return false;
-        return true;
+            return null;
+
+        List<string> data = FileSystemUtilites.ReadFromFile("users.csv");
+        foreach (string s in data)
+        {
+            User user = User.FromCsv(s);
+            if (user.Email == email && user.Password == password)
+            {
+                return user;
+            }
+        }
+        return null;
     }
 
     public static Boolean UserExists(string? email)
     {
-        if (String.IsNullOrEmpty(email))
+        
+            List<string> data = FileSystemUtilites.ReadFromFile("users.csv");
+            foreach (string s in data)
+            {
+                User user = User.FromCsv(s);
+                if (user.Email == email)
+                {
+                    return true;
+                }
+            }
             return false;
-        return true;
+        
     }
 
-    public static Boolean RegisterUser(string? name, string? email, string? password)
+    public static User RegisterUser(string? name, string? email, string? password)
     {
         if (String.IsNullOrEmpty(name) || String.IsNullOrEmpty(email) || String.IsNullOrEmpty(password))
-            return false;
-        // check user already exists
-        // if exists return false
+            throw new Exception("Invalid Data Entered Please Make Sure You Filled All The Fields");
+        if (UserExists(email))
+            throw new Exception("User With That Email Already Exists");
 
-        return true;
+        User newUser = new()
+        {
+            Id = FileSystemUtilites.GetNextId("users.csv"),
+            Name = name,
+            Email = email,
+            Password = password
+        };
+        FileSystemUtilites.WriteToFile("users.csv", ToCsv(newUser));
+
+        return newUser;
     }
 
     public static string ToCsv(User user)
     {
         return $"{user.Id},{user.Name},{user.Email},{user.Password},{user.Role}";
     }
-    public static string header = "id,name,email,password,role";
+
+    public static User FromCsv(string csvLine)
+    {
+        string[] values = csvLine.Split(',');
+        User user = new User();
+        user.Id = Convert.ToInt32(values[0]);
+        user.Name = values[1];
+        user.Email = values[2];
+        user.Password = values[3];
+        user.Role = (UserRole)Enum.Parse(typeof(UserRole), values[4]);
+        return user;
+    }
+
 }

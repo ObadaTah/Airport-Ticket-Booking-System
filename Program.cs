@@ -12,16 +12,17 @@ public class Program
         string[] files = { "users.csv", "flights.csv", "bookings.csv" };
         string[] fileHeaders = { User.header, Flight.header, Booking.header };
         FileSystemUtilites.InitFiles(files, fileHeaders);
-        FileSystemUtilites.WriteToFile("users.csv", [ "1", "asd", "asd" ]);
+
+        User user;
         int choice = GenericUtilites.promptLoginRegister();
         switch (choice)
         {
             case 1:
-                GenericUtilites.RequestLogin();
+                user = GenericUtilites.RequestLogin();
                 Console.WriteLine("Login Successful");
                 break;
             case 2:
-                GenericUtilites.RequestRegister();
+                user = GenericUtilites.RequestRegister();
                 Console.WriteLine("Register Successful");
                 break;
             case 3:
