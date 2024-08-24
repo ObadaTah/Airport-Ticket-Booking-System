@@ -5,8 +5,6 @@ VisualStudioVersion = 17.10.35201.131
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Airport Ticket Booking System", "Airport Ticket Booking System.csproj", "{4CA12003-DED7-42B7-822B-079E11C42A06}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "storage", "storage", "{A35A661F-0575-4314-B6E9-C2FF09520A0C}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
