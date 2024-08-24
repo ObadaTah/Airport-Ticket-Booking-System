@@ -4,17 +4,14 @@ public static class FileSystemUtilites
 {
     public static string GetPath()
     {
-        return Path.GetFullPath(Path.Combine(Environment.CurrentDirectory, @"..\..\..\"));
-    }
-
-    public static string GetPath(string fileName)
-    {
-        return Path.GetFullPath(Path.Combine(GetPath(), fileName));
+        return Path.GetFullPath(@"..\..\..\");
     }
 
     private static void CreateFile(string fileName)
     {
-        string path = GetPath(fileName);
+        string path = Path.Combine(GetPath(), "storage");
+        path = Path.Combine(path, fileName);
+        Console.WriteLine(path);
         if (!File.Exists(path))
         {
             using (File.Create(path)) { };
