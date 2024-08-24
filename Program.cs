@@ -1,20 +1,25 @@
-﻿namespace Airport_Ticket_Booking_System;
+﻿using Airport_Ticket_Booking_System.Bookings;
+using Airport_Ticket_Booking_System.Utilites;
+
+namespace Airport_Ticket_Booking_System;
 
 public class Program
 {
     static void Main(string[] args)
     {
-        Console.WriteLine("Hello, World!");
 
-        int choice = Utilites.promptLoginRegister();
+        string[] files = { "users.csv", "flights.csv", "bookings.csv" };
+        FileSystemUtilites.InitFiles(files);
+
+        int choice = GenericUtilites.promptLoginRegister();
         switch (choice)
         {
             case 1:
-                Utilites.RequestLogin();
+                GenericUtilites.RequestLogin();
                 Console.WriteLine("Login Successful");
                 break;
             case 2:
-                Utilites.RequestRegister();
+                GenericUtilites.RequestRegister();
                 Console.WriteLine("Register Successful");
                 break;
             case 3:

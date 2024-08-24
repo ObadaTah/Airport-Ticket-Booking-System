@@ -1,9 +1,8 @@
-﻿
-using Airport_Ticket_Booking_System.Users;
+﻿using Airport_Ticket_Booking_System.Users;
 
-namespace Airport_Ticket_Booking_System;
+namespace Airport_Ticket_Booking_System.Utilites;
 
-public static partial class Utilites
+public static partial class GenericUtilites
 {
     public static int promptLoginRegister()
     {
@@ -11,12 +10,12 @@ public static partial class Utilites
         Console.WriteLine("2. Register");
         Console.WriteLine("3. Exit");
 
-        
+
         return askValidInt(3);
     }
 
 
-    public static Boolean RequestLogin()
+    public static bool RequestLogin()
     {
 
         Console.Write("Enter your Email: ");
@@ -32,7 +31,7 @@ public static partial class Utilites
         return true;
     }
 
-    public static Boolean RequestRegister()
+    public static bool RequestRegister()
     {
         Console.Write("Enter your Name: ");
         string? name = Console.ReadLine();
