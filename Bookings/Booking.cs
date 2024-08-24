@@ -11,4 +11,10 @@ public class Booking
     public DateTime BookingDate { get; set; }
     public BookingStatus Status { get; set; } = BookingStatus.Pending;
 
+    public static string ToCsv(Booking booking)
+    {
+        return $"{booking.Id},{booking.Flight.FlightNumber},{booking.User.Id},{booking.BookingDate},{booking.Status}";
+    }
+
+    public static string header = "bookingId,flightNumber,userId,bookingDate,status";
 }

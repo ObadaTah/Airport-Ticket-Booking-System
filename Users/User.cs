@@ -36,4 +36,10 @@ public class User
 
         return true;
     }
+
+    public static string ToCsv(User user)
+    {
+        return $"{user.Id},{user.Name},{user.Email},{user.Password},{user.Role}";
+    }
+    public static string header = "id,name,email,password,role";
 }

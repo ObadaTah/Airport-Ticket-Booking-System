@@ -1,6 +1,7 @@
 ﻿using Airport_Ticket_Booking_System.Bookings;
 using Airport_Ticket_Booking_System.Utilites;
-
+using Airport_Ticket_Booking_System.Users;
+using Airport_Ticket_Booking_System.Flights;
 namespace Airport_Ticket_Booking_System;
 
 public class Program
@@ -9,9 +10,9 @@ public class Program
     {
 
         string[] files = { "users.csv", "flights.csv", "bookings.csv" };
-        string[] fileHeaders = { "username,password,role", "flightNumber,origin,destination,departureTime,arrivalTime,price", "bookingId,flightNumber,username" };
+        string[] fileHeaders = { User.header, Flight.header, Booking.header };
         FileSystemUtilites.InitFiles(files, fileHeaders);
-        
+        FileSystemUtilites.WriteToFile("users.csv", [ "1", "asd", "asd" ]);
         int choice = GenericUtilites.promptLoginRegister();
         switch (choice)
         {
