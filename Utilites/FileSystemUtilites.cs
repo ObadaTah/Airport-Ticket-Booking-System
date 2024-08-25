@@ -82,7 +82,7 @@ public static class FileSystemUtilites
                 data.Add(s);
             }
         }
-        return data[1..^0];
+        return data[1..^0]; // return data without the header
     }
 
     internal static int GetNextId(string filename)

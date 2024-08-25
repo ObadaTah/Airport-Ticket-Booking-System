@@ -22,13 +22,18 @@ public static partial class GenericUtilites
         string? email = Console.ReadLine();
         Console.Write("Enter your password: ");
         string? password = Console.ReadLine();
-        User user = User.CheckUserCredintials(email, password);
-        while (user == null)
+        try
         {
-            Console.WriteLine("Invalid Credintials. Please Try Again");
+            User user = User.CheckUserCredintials(email, password);
+            return user;
+
+        }
+        catch (Exception e)
+        {
+            PrintError(e.Message);
             return RequestLogin();
         }
-        return user;
+      
     }
 
     public static User RequestRegister()
@@ -41,18 +46,16 @@ public static partial class GenericUtilites
         Console.Write("Enter your password: ");
         string? password = Console.ReadLine();
 
-        User user;
         try
         {
-            user = User.RegisterUser(name, email, password);
+            User user = User.RegisterUser(name, email, password);
+            return user;
         }
         catch (Exception e)
         {
-            Console.WriteLine(e.Message);
+            PrintError(e.Message);
             return RequestRegister();
         }
-       
-        return user;
     }
     public static int AskValidInt(int max)
     {
@@ -63,7 +66,7 @@ public static partial class GenericUtilites
         {
             if (choice == null)
             {
-                Console.WriteLine("Invalid choice. Please try again.");
+                PrintError("Invalid choice. Please try again.");
                 return AskValidInt(max);
             }
             int num = int.Parse(choice);
@@ -73,15 +76,22 @@ public static partial class GenericUtilites
 
             else
             {
-                Console.WriteLine("Invalid choice. Please try again.");
+                PrintError("Invalid choice. Please try again.");
                 return AskValidInt(max);
             }
         }
         catch (Exception)
         {
-            Console.WriteLine("Invalid choice. Please try again.");
+            PrintError("Invalid choice. Please try again.");
             return AskValidInt(max);
         }
+    }
+
+    public static void PrintError(string message)
+    {
+        Console.ForegroundColor = ConsoleColor.Red;
+        Console.WriteLine(message);
+        Console.ResetColor();
     }
 }
 

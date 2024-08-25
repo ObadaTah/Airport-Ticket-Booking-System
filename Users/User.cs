@@ -13,11 +13,11 @@ public class User
     public List<Booking> Bookings { get; set; } = new();
 
 
-    public static User? CheckUserCredintials(string? email, string? password)
+    public static User CheckUserCredintials(string? email, string? password)
     {
 
         if (String.IsNullOrEmpty(email) || String.IsNullOrEmpty(password))
-            return null;
+            throw new Exception("Invalid Data Entered Please Make Sure You Filled All The Fields");
 
         List<string> data = FileSystemUtilites.ReadFromFile("users.csv");
         foreach (string s in data)
@@ -28,7 +28,7 @@ public class User
                 return user;
             }
         }
-        return null;
+        throw new Exception("Invalid Data Entered, Password and Email Doesn't Match");
     }
 
     public static Boolean UserExists(string? email)
