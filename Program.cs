@@ -13,8 +13,9 @@ public class Program
         string[] fileHeaders = { User.header, Flight.header, Booking.header };
         FileSystemUtilites.InitFiles(files, fileHeaders);
 
-        User user;
+        User user = new();
         int choice = GenericUtilites.promptLoginRegister();
+
         switch (choice)
         {
             case 1:
@@ -26,11 +27,44 @@ public class Program
                 Console.WriteLine("Register Successful");
                 break;
             case 3:
-                break;
-            default:
-                break;
+                return;
+        }
+
+        while (true)
+        {
+            if (user.Role == UserRole.Manager)
+            {
+                int managerChoice = UserUtilites.PrinManagerMenu();
+                switch (managerChoice)
+                {
+                    case 1:
+                        // BookingUtilites.FilterBookings();
+                        break;
+                    case 2:
+                        FlightUtilites.UploadFlights();
+                        break;
+                    case 3:
+                        return;
+                }
+                if (user.Role == UserRole.Passenger)
+                {
+                    int passengerChoice = UserUtilites.PrintPassengerMenu();
+                    switch (passengerChoice)
+                    {
+                        case 1:
+                            // BookingsUtilites.BookFlight(user);
+                            break;
+                        case 2:
+                            // BookingsUtilites.UsersBookings(user);
+                            break;
+                        case 3:
+                            return;
+                    }
+
+                }
+
+            }
 
         }
-        
     }
 }

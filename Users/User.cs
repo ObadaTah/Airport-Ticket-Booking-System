@@ -83,4 +83,9 @@ public class User
         return user;
     }
 
+    public override string ToString()
+    {
+        return $"Id: {Id}, Name: {Name}, Email: {Email}, Role: {Role}";
+    }
+
 }

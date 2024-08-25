@@ -15,6 +15,22 @@ public class Flight
         return $"{flight.FlightNumber},{flight.Price},{flight.Destination},{flight.DepartureAirport},{flight.ArrivalAirport},{flight.DepartureDate},{flight.Class}";
     }
 
+    public static Flight FromCsv(string csv)
+    {
+        string[] values = csv.Split(',');
+        Flight flight = new()
+        {
+            FlightNumber = int.Parse(values[0]),
+            Price = decimal.Parse(values[1]),
+            Destination = values[2],
+            DepartureAirport = values[3],
+            ArrivalAirport = values[4],
+            DepartureDate = DateTime.Parse(values[5]),
+            Class = (FlightClass)Enum.Parse(typeof(FlightClass), values[6])
+        };
+        return flight;
+    }
+
     public static string header = "flightNumber,price,destination,departureAirport,arrivalAirport,departureDate,class";
 
 }
