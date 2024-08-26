@@ -2,5 +2,4 @@ bookingId,flightNumber,userId,bookingDate,status
 1,12,10,8/26/2024 1:10:57 PM,Confirmed
 2,2,10,8/26/2024 1:11:47 PM,Confirmed
 3,3,10,8/26/2024 1:11:53 PM,Confirmed
-4,3,11,8/26/2024 1:13:07 PM,Confirmed
-5,5,11,8/26/2024 1:21:34 PM,Confirmed
+5,5,11,8/26/2024 1:21:34 PM,Cancelled

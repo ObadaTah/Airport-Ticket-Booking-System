@@ -23,7 +23,6 @@ public class Booking
         Id = id;
         User = user;
         Flight = flight;
-        Status = BookingStatus.Confirmed;
     }
 
     public static Booking FromCsv(string csv)
