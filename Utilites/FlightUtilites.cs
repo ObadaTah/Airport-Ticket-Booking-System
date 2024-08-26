@@ -57,6 +57,19 @@ public static class FlightUtilites
         }
     }
 
+    public static void PrintFlight(Flight flight)
+    {
+        if (flight.Class == FlightClass.Economy)
+            Console.ForegroundColor = ConsoleColor.Blue;
+        if (flight.Class == FlightClass.FirstClass)
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
+        if (flight.Class == FlightClass.Business)
+            Console.ForegroundColor = ConsoleColor.DarkGreen;
+        Console.WriteLine("=====================================================");
+        Console.WriteLine(flight.ToString());
+        Console.WriteLine("=====================================================");
+        Console.ResetColor();
+    }
     public static Dictionary<int, Flight> GetFlights()
     {
         List<string> data = FileSystemUtilites.ReadFromFile("flights.csv");
