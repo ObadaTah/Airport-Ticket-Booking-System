@@ -31,6 +31,11 @@ public class Flight
         return flight;
     }
 
+    public override string ToString()
+    {
+        return $"Flight Number: {FlightNumber}\nPrice: {Price}\nDestination: {Destination}\nDeparture Airport: {DepartureAirport}\nArrival Airport: {ArrivalAirport}\nDeparture Date: {DepartureDate}\nClass: {Class}";
+    }
+
     public static string header = "flightNumber,price,destination,departureAirport,arrivalAirport,departureDate,class";
 
 }

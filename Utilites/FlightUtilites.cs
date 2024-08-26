@@ -37,4 +37,35 @@ public static class FlightUtilites
         }
         return true;
     }
+
+    public static void PrintFlights()
+    {
+        List<string> data = FileSystemUtilites.ReadFromFile("flights.csv");
+        foreach (string s in data)
+        {
+            Flight flight = Flight.FromCsv(s);
+            if(flight.Class == FlightClass.Economy)
+                Console.ForegroundColor = ConsoleColor.Blue;
+            if (flight.Class == FlightClass.FirstClass)
+                Console.ForegroundColor = ConsoleColor.DarkYellow;
+            if (flight.Class == FlightClass.Business)
+                Console.ForegroundColor = ConsoleColor.DarkGreen;
+            Console.WriteLine("=====================================================");
+            Console.WriteLine(flight.ToString());
+            Console.WriteLine("=====================================================");
+            Console.ResetColor();
+        }
+    }
+
+    public static Dictionary<int, Flight> GetFlights()
+    {
+        List<string> data = FileSystemUtilites.ReadFromFile("flights.csv");
+        Dictionary<int, Flight> flights = [];
+        foreach (string s in data)
+        {
+            Flight flight = Flight.FromCsv(s);
+            flights.Add(flight.FlightNumber, flight);
+        }
+        return flights;
+    }
 }

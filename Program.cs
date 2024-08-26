@@ -20,11 +20,11 @@ public class Program
         {
             case 1:
                 user = GenericUtilites.RequestLogin();
-                Console.WriteLine("Login Successful");
+                GenericUtilites.PrinSucc("Login Successful");
                 break;
             case 2:
                 user = GenericUtilites.RequestRegister();
-                Console.WriteLine("Register Successful");
+                GenericUtilites.PrinSucc("Register Successful");
                 break;
             case 3:
                 return;
@@ -46,21 +46,21 @@ public class Program
                     case 3:
                         return;
                 }
-                if (user.Role == UserRole.Passenger)
-                {
-                    int passengerChoice = UserUtilites.PrintPassengerMenu();
-                    switch (passengerChoice)
-                    {
-                        case 1:
-                            // BookingsUtilites.BookFlight(user);
-                            break;
-                        case 2:
-                            // BookingsUtilites.UsersBookings(user);
-                            break;
-                        case 3:
-                            return;
-                    }
 
+            }
+            if (user.Role == UserRole.Passenger)
+            {
+                int passengerChoice = UserUtilites.PrintPassengerMenu();
+                switch (passengerChoice)
+                {
+                    case 1:
+                        BookingUtilites.BookFlight(user);
+                        break;
+                    case 2:
+                        // BookingsUtilites.UsersBookings(user);
+                        break;
+                    case 3:
+                        return;
                 }
 
             }

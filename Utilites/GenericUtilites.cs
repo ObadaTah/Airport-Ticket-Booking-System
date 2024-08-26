@@ -93,5 +93,12 @@ public static partial class GenericUtilites
         Console.WriteLine(message);
         Console.ResetColor();
     }
+
+    public static void PrinSucc(string message)
+    {
+        Console.ForegroundColor = ConsoleColor.Green;
+        Console.WriteLine(message);
+        Console.ResetColor();
+    }
 }
 

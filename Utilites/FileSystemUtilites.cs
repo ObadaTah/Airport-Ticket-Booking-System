@@ -87,7 +87,15 @@ public static class FileSystemUtilites
 
     internal static int GetNextId(string filename)
     {
-        string lastEntry = ReadFromFile(filename)[^1].Split(',')[0];
-        return Int32.Parse(lastEntry)+1;
+        try
+        {
+            string lastEntry = ReadFromFile(filename)[^1].Split(',')[0];
+            return Int32.Parse(lastEntry) + 1;
+
+        }
+        catch (Exception)
+        {
+            return 1;
+        }
     }
 }

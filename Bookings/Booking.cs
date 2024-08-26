@@ -8,7 +8,7 @@ public class Booking
     public int Id { get; set; }
     public Flight Flight { get; set; }
     public User User { get; set; }
-    public DateTime BookingDate { get; set; }
+    public DateTime BookingDate { get; set; } = DateTime.Now;
     public BookingStatus Status { get; set; } = BookingStatus.Pending;
 
     public static string ToCsv(Booking booking)
@@ -17,4 +17,12 @@ public class Booking
     }
 
     public static string header = "bookingId,flightNumber,userId,bookingDate,status";
+
+    public Booking(int id, User user, Flight flight)
+    {
+        Id = id;
+        User = user;
+        Flight = flight;
+        Status = BookingStatus.Confirmed;
+    }
 }
