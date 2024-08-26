@@ -57,7 +57,7 @@ public class Program
                         BookingUtilites.BookFlight(user);
                         break;
                     case 2:
-                        // BookingsUtilites.UsersBookings(user);
+                        BookingUtilites.UsersBookings(user);
                         break;
                     case 3:
                         return;

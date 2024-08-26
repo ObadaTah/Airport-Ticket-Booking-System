@@ -88,4 +88,15 @@ public class User
         return $"Id: {Id}, Name: {Name}, Email: {Email}, Role: {Role}";
     }
 
+    public static User GetUserById(int id)
+    {
+        List<string> users = FileSystemUtilites.ReadFromFile("users.csv");
+        foreach (string s in users)
+        {
+            User user = User.FromCsv(s);
+            if (user.Id == id)
+                return user;
+        }
+        throw new Exception("User Not Found");
+    }
 }

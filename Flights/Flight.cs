@@ -1,4 +1,5 @@
-﻿namespace Airport_Ticket_Booking_System.Flights;
+﻿using Airport_Ticket_Booking_System.Utilites;
+namespace Airport_Ticket_Booking_System.Flights;
 
 public class Flight
 {
@@ -38,4 +39,16 @@ public class Flight
 
     public static string header = "flightNumber,price,destination,departureAirport,arrivalAirport,departureDate,class";
 
+
+    public static Flight GetFlightByNumber(int flightNumber)
+    {
+        List<string> flights = FileSystemUtilites.ReadFromFile("flights.csv");
+        foreach (string s in flights)
+        {
+            Flight flight = Flight.FromCsv(s);
+            if (flight.FlightNumber == flightNumber)
+                return flight;
+        }
+        throw new Exception("Flight Not Found");
+    }
 }

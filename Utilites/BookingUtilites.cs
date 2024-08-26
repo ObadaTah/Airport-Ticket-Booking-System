@@ -47,4 +47,26 @@ public static class BookingUtilites
     {
         throw new NotImplementedException();
     }
+
+    public static void UsersBookings(User user)
+    {
+        List<string> data = FileSystemUtilites.ReadFromFile("bookings.csv");
+        foreach (string s in data)
+        {
+            Booking booking = Booking.FromCsv(s);
+            if (booking.User.Email == user.Email)
+            {
+                if (booking.Flight.Class == FlightClass.Economy)
+                    Console.ForegroundColor = ConsoleColor.Blue;
+                if (booking.Flight.Class == FlightClass.FirstClass)
+                    Console.ForegroundColor = ConsoleColor.DarkYellow;
+                if (booking.Flight.Class == FlightClass.Business)
+                    Console.ForegroundColor = ConsoleColor.DarkGreen;
+                Console.WriteLine("=====================================================");
+                Console.WriteLine(booking.ToString());
+                Console.WriteLine("=====================================================");
+                Console.ResetColor();
+            }
+        }
+    }
 }

@@ -25,4 +25,20 @@ public class Booking
         Flight = flight;
         Status = BookingStatus.Confirmed;
     }
+
+    public static Booking FromCsv(string csv)
+    {
+        string[] values = csv.Split(',');
+        Booking booking = new(int.Parse(values[0]), User.GetUserById(int.Parse(values[2])), Flight.GetFlightByNumber(int.Parse(values[1])))
+        {
+            BookingDate = DateTime.Parse(values[3]),
+            Status = (BookingStatus)Enum.Parse(typeof(BookingStatus), values[4])
+        };
+        return booking;
+    }
+    public override string ToString()
+    {
+        return $"Booking ID: {Id}\nFlight: {Flight.FlightNumber}\nUser: {User.Name}\nBooking Date: {BookingDate}\nStatus: {Status}";
+    }
+
 }
