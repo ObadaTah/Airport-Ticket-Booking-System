@@ -3,13 +3,54 @@ namespace Airport_Ticket_Booking_System.Flights;
 
 public class Flight
 {
-    public int FlightNumber { get; set; }
-    public decimal Price { get; set; }
-    public string Destination { get; set; } = string.Empty;
-    public string DepartureAirport { get; set; } = string.Empty;
-    public string ArrivalAirport { get; set; } = string.Empty;
-    public DateTime DepartureDate { get; set; }
-    public FlightClass Class { get; set; } = FlightClass.Economy;
+    private int _flightNumber;
+    public required int FlightNumber
+    { 
+        get 
+        { 
+            return _flightNumber;
+        } 
+        set 
+        {
+
+            if (Flight.GetFlightByNumber(value) != null)
+                throw new Exception("Flight Number already exists");
+            _flightNumber = value;
+        }
+    }
+
+    private decimal _price;
+    public required decimal Price 
+    {
+        get 
+        {
+            return _price;
+        }
+            
+        set
+        { 
+            if (value < 0) 
+                throw new Exception("Price must be positive");
+            _price = value;
+        }
+    }
+    public required string Destination { get; set; } = string.Empty;
+    public required string DepartureAirport { get; set; } = string.Empty;
+    public required string ArrivalAirport { get; set; } = string.Empty;
+    private DateTime _departureDate;
+    public required DateTime DepartureDate {
+        get
+        {
+            return _departureDate;
+        }
+        set
+        {
+            if (value < DateTime.Now)
+                throw new Exception("Departure Date must be in the future");
+            _departureDate = value;
+        }
+    }
+    public required FlightClass Class { get; set; } = FlightClass.Economy;
 
     public static string ToCsv(Flight flight)
     {
@@ -39,8 +80,7 @@ public class Flight
 
     public static string header = "flightNumber,price,destination,departureAirport,arrivalAirport,departureDate,class";
 
-
-    public static Flight GetFlightByNumber(int flightNumber)
+    public static Flight? GetFlightByNumber(int flightNumber)
     {
         List<string> flights = FileSystemUtilites.ReadFromFile("flights.csv");
         foreach (string s in flights)
@@ -49,6 +89,6 @@ public class Flight
             if (flight.FlightNumber == flightNumber)
                 return flight;
         }
-        throw new Exception("Flight Not Found");
+        return null;
     }
 }

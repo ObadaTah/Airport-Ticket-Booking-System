@@ -81,4 +81,61 @@ public static class FlightUtilites
         }
         return flights;
     }
+
+    public static void FilterFlights()
+    {
+        Console.WriteLine("1. Flight Number");
+        Console.WriteLine("2. Price");
+        Console.WriteLine("3. Destination");
+        Console.WriteLine("4. Departuer Airport");
+        Console.WriteLine("5. Arrival Airport");
+        Console.WriteLine("6. Departure Date");
+        Console.WriteLine("7. Class");
+        Console.Write("What field do you want to search:");
+
+        int choice = GenericUtilites.AskValidInt(7);
+        Console.Write("Enter Search Value:");
+        string? searchValue = Console.ReadLine();
+        List<string> data = FileSystemUtilites.ReadFromFile("flights.csv");
+        foreach (string s in data)
+        {
+            Flight flight = Flight.FromCsv(s);
+            switch (choice)
+            {
+                case 1:
+                    if (flight.FlightNumber.ToString() == searchValue)
+                        Console.WriteLine(flight.ToString());
+                    break;
+                case 2:
+                    if (flight.Price.ToString() == searchValue)
+                        FlightUtilites.PrintFlight(flight);
+                    break;
+                case 3:
+                    if (flight.Destination == searchValue)
+                        FlightUtilites.PrintFlight(flight);
+                    break;
+                case 4:
+                    if (flight.DepartureAirport == searchValue)
+                        FlightUtilites.PrintFlight(flight);
+                    break;
+                case 5:
+                    if (flight.ArrivalAirport == searchValue)
+                        FlightUtilites.PrintFlight(flight);
+                    break;
+                case 6:
+                    if (flight.DepartureDate.ToString() == searchValue)
+                        FlightUtilites.PrintFlight(flight);
+                    break;
+                case 7:
+                    if (flight.Class.ToString() == searchValue)
+                        FlightUtilites.PrintFlight(flight);
+                    break;
+            }
+        }
+    }
+
+    internal static object GetFlightByNumber(int value)
+    {
+        throw new NotImplementedException();
+    }
 }

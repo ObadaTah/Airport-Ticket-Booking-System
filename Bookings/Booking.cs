@@ -29,7 +29,10 @@ public class Booking
     public static Booking FromCsv(string csv)
     {
         string[] values = csv.Split(',');
-        Booking booking = new(int.Parse(values[0]), User.GetUserById(int.Parse(values[2])), Flight.GetFlightByNumber(int.Parse(values[1])))
+        Flight? flight = Flight.GetFlightByNumber(int.Parse(values[1]));
+        if (flight == null)
+            throw new Exception("Flight Not Found");
+        Booking booking = new(int.Parse(values[0]), User.GetUserById(int.Parse(values[2])), flight)
         {
             BookingDate = DateTime.Parse(values[3]),
             Status = (BookingStatus)Enum.Parse(typeof(BookingStatus), values[4])

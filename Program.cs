@@ -38,7 +38,7 @@ public class Program
                 switch (managerChoice)
                 {
                     case 1:
-                        // BookingUtilites.FilterBookings();
+                        FlightUtilites.FilterFlights();
                         break;
                     case 2:
                         FlightUtilites.UploadFlights();
