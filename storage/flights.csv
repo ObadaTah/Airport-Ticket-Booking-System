@@ -1,8 +1,4 @@
-flightNumber,price,destination,departureAirport,arrivalAirport,departureDate,class
-1,952,London,EXD,TIP,4/25/2026 12:00:00 AM,Economy
-2,395,Berlin,MRP,PGK,6/25/2026 12:00:00 AM,Business
-3,859,New York,VFX,YYS,2/25/2025 12:00:00 AM,Business
-4,677,London,SIE,WKW,10/25/2024 12:00:00 AM,Business
+flightNumber,price,destination,departureAirport,arrivalAirport,departureDate,class1,952,London,EXD,TIP,4/25/2026 12:00:00 AM,Economy
 5,544,Berlin,HDU,GVI,12/25/2025 12:00:00 AM,FirstClass
 6,934,New York,ULI,PKM,6/25/2025 12:00:00 AM,Economy
 7,833,London,DQM,UTV,6/25/2025 12:00:00 AM,Business
@@ -12,4 +8,3 @@ flightNumber,price,destination,departureAirport,arrivalAirport,departureDate,cla
 11,459,Berlin,EXN,ZVU,11/25/2025 12:00:00 AM,Business
 12,420,New York,JUS,EEZ,11/25/2025 12:00:00 AM,Business
 13,123,London,YGI,FOP,2/25/2025 12:00:00 AM,Economy
-14,187,Berlin,QSY,OZW,7/25/2026 12:00:00 AM,Business

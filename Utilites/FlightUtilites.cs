@@ -13,10 +13,19 @@ public static class FlightUtilites
             if (IsFileValid(fileAddress))
             {
                 List<string> data = FileSystemUtilites.ReadFromFile(fileAddress!);
-                foreach (string s in data)
+                for (int i = 0; i < data.Count; i++)
                 {
-                    Flight flight = Flight.FromCsv(s);
-                    FileSystemUtilites.WriteToFile("flights.csv", Flight.ToCsv(flight));
+                    string s = data[i];
+                    try
+                    {
+                        Flight flight = Flight.FromCsv(s, i);
+                        FileSystemUtilites.WriteToFile("flights.csv", Flight.ToCsv(flight));
+                    }
+                    catch (Exception e)
+                    {
+                        GenericUtilites.PrintError(e.Message);
+                        continue;
+                    }
                 }
             }
         }
@@ -132,10 +141,5 @@ public static class FlightUtilites
                     break;
             }
         }
-    }
-
-    internal static object GetFlightByNumber(int value)
-    {
-        throw new NotImplementedException();
     }
 }
