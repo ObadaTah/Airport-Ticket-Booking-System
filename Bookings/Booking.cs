@@ -26,7 +26,7 @@ public class Booking
         Status = BookingStatus.Confirmed;
     }
 
-    public static Booking FromCsv(string csv)
+    public static Booking FromCsvFormat(string csv)
     {
         string[] values = csv.Split(',');
         Flight? flight = Flight.GetFlightByNumber(int.Parse(values[1]));
