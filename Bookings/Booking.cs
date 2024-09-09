@@ -28,8 +28,8 @@ public class Booking
 
     public static Booking FromCsvFormat(string csv)
     {
-        string[] values = csv.Split(',');
-        Flight? flight = Flight.GetFlightByNumber(int.Parse(values[1]));
+        var values = csv.Split(',');
+        var flight = Flight.GetFlightByNumber(int.Parse(values[1]));
         if (flight == null)
             throw new Exception("Flight Not Found");
         Booking booking = new(int.Parse(values[0]), User.GetUserById(int.Parse(values[2])), flight)
