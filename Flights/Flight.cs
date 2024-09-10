@@ -1,87 +1,24 @@
 ﻿using Airport_Ticket_Booking_System.Utilites;
+using FluentValidation.Results;
+
 namespace Airport_Ticket_Booking_System.Flights;
 
-public class Flight
+public class Flight(int flightNumber, decimal price, string destination, string departureAirport, string arrivalAirport,
+              DateTime departureDate, FlightClass @class)
 {
-    private int _flightNumber;
-    public int FlightNumber
-    { 
-        get 
-        { 
-            return _flightNumber;
-        } 
-        set 
-        {
+    public int FlightNumber { get; set; } = flightNumber;
 
-            if (value < 0)
-                throw new Exception("Flight Number must be positive");
+    public decimal Price { get; set; } = price;
 
-            _flightNumber = value;
-        }
-    }
+    public string Destination { get; set; } = destination;
 
-    private decimal _price;
-    public decimal Price 
-    {
-        get 
-        {
-            return _price;
-        }
-            
-        set
-        { 
-            if (value < 0) 
-                throw new Exception("Price must be positive");
-            _price = value;
-        }
-    }
-    private string _destination;
-    public string Destination { get { return _destination; } 
-        set 
-        {
-            if (string.IsNullOrEmpty(value))
-                throw new Exception("Destination cannot be empty");
-            if (value.Length < 3)
-                throw new Exception("Destination must be at least 3 characters long or more");
-            _destination = value;
-        } 
-    }
-    private string _departureAirport;
-    public string DepartureAirport { get { return _departureAirport; } 
-        set 
-        { 
-            if (string.IsNullOrEmpty(value))
-                throw new Exception("Departure Airport cannot be empty");
-            if (value.Length < 3)
-                throw new Exception("Departure Airport must be at least 3 characters long or more");   
-            _departureAirport = value;
-        } 
-    }
-    private string _arrivalAirport;
-    public string ArrivalAirport { get { return _arrivalAirport; } 
-        set
-        {
-            if (string.IsNullOrEmpty(value))
-                throw new Exception("Arrival Airport cannot be empty");
-            if (value.Length < 3)
-                throw new Exception("Arrival Airport must be at least 3 characters long or more");
-            _arrivalAirport = value;
-        } 
-    } 
-    private DateTime _departureDate;
-    public DateTime DepartureDate {
-        get
-        {
-            return _departureDate;
-        }
-        set
-        {
-            if (value < DateTime.Now)
-                throw new Exception("Departure Date must be in the future");
-            _departureDate = value;
-        }
-    }
-    public FlightClass Class { get; set; } = FlightClass.Economy;
+    public string DepartureAirport { get; set; } = departureAirport;
+
+    public string ArrivalAirport { get; set; } = arrivalAirport;
+
+    public DateTime DepartureDate { get; set; } = departureDate;
+
+    public FlightClass Class { get; set; } = @class;
 
     public static string ToCsv(Flight flight)
     {
@@ -93,70 +30,48 @@ public class Flight
         string[] values = csv.Split(',');
         List<string> errors = [];
 
-        Flight flight = new();
+        ParseVavlues(values, errors, out var flightNumber, out var price, out var departureDate, out var @class);
 
-        try
-            {
-            flight.FlightNumber = int.Parse(values[0]);
-        }
-        catch (Exception e)
-        {
-            errors.Add( e.Message);
-        }
-        try
-            {
-            flight.Price = decimal.Parse(values[1]);
-        }
-        catch (Exception e)
-        {
-            errors.Add(e.Message);
-        }
-        try
-            {
-            flight.Destination = values[2];
-        }
-        catch (Exception e)
-        {
-            errors.Add(e.Message);
-        }
-        try
-            {
-            flight.DepartureAirport = values[3];
-        }
-        catch (Exception e)
-        {
-            errors.Add(e.Message);
-        }
-        try
-            {
-            flight.ArrivalAirport = values[4];
-        }
-        catch (Exception e)
-        {
-            errors.Add(e.Message);
-        }
-        try
-            {
-            flight.DepartureDate = DateTime.Parse(values[5]);
-        }
-        catch (Exception e)
-        {
-            errors.Add(e.Message);
-        }
-        try
-            {
-            flight.Class = (FlightClass)Enum.Parse(typeof(FlightClass), values[6]);
-        }
-        catch (Exception e)
-        {
-            errors.Add(e.Message);
-        }
         if (errors.Any(x => x != null))
         {
             throw new Exception($"In line {line}:\n" + string.Join("\n", errors));
         }
-        
+
+        Flight flight = new(flightNumber, price, values[2], values[3], values[4], departureDate, @class);
+        FlightValidator validator = new();
+        ValidationResult results = validator.Validate(flight);
+
+        List<String> validationErrors = [];
+        if (!results.IsValid)
+        {
+            foreach (var failure in results.Errors)
+            {
+                validationErrors.Add("Property " + failure.PropertyName + " failed validation. Error was: " + failure.ErrorMessage);
+            }
+
+            throw new Exception($"In line {line}:\n" + string.Join("\n", validationErrors));
+        }
         return flight;
+    }
+
+    private static void ParseVavlues(string[] values, List<string> errors, out int flightNumber, out decimal price, out DateTime departureDate, out FlightClass @class)
+    {
+        #region early fall check
+        if (!int.TryParse(values[0], out flightNumber))
+            errors.Add("Invalid Flight Number");
+        if (!decimal.TryParse(values[1], out price))
+            errors.Add("Invalid Price");
+        if (string.IsNullOrEmpty(values[2]))
+            errors.Add("Invalid Destination");
+        if (string.IsNullOrEmpty(values[3]))
+            errors.Add("Invalid Departure Airport");
+        if (string.IsNullOrEmpty(values[4]))
+            errors.Add("Invalid Arrival Airport");
+        if (!DateTime.TryParse(values[5], out departureDate))
+            errors.Add("Invalid Departure Date");
+        if (!Enum.TryParse(values[6], out @class))
+            errors.Add("Invalid Class");
+        #endregion
     }
 
     public override string ToString()

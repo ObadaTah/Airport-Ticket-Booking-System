@@ -18,7 +18,7 @@ public static class FlightUtilites
                     string s = data[i];
                     try
                     {
-                        Flight flight = Flight.FromCsv(s, i);
+                        Flight flight = Flight.FromCsv(s, i+2);
                         FileSystemUtilites.WriteToFile("flights.csv", Flight.ToCsv(flight));
                     }
                     catch (Exception e)

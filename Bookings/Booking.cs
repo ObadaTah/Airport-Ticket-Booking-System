@@ -38,6 +38,7 @@ public class Booking
     {
         string[] values = csv.Split(',');
 
+        #region early fall check
         if (int.TryParse(values[0], out int bookingId))
             throw new Exception("Invalid Booking ID");
 
@@ -52,6 +53,7 @@ public class Booking
 
         if (Enum.TryParse(values[4], out BookingStatus status))
             throw new Exception("Invalid Booking Status");
+        #endregion
 
         Flight? flight = Flight.GetFlightByNumber(flightNumber) ?? throw new Exception("Flight Not Found");
         Booking booking = new(bookingId, User.GetUserById(userId), flight, bookingDate, status);

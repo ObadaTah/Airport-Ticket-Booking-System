@@ -8,3 +8,10 @@ flightNumber,price,destination,departureAirport,arrivalAirport,departureDate,cla
 11,459,Berlin,EXN,ZVU,11/25/2025 12:00:00 AM,Business
 12,420,New York,JUS,EEZ,11/25/2025 12:00:00 AM,Business
 13,123,London,YGI,FOP,2/25/2025 12:00:00 AM,Economy
+1,952,London,EXD,TIP,4/25/2026 12:00:00 AM,Economy
+3,859,New York,VFX,YYS,2/25/2025 12:00:00 AM,Business
+4,677,London,SIE,WKW,10/25/2024 12:00:00 AM,Business
+6,934,New York,ULI,PKM,6/25/2025 12:00:00 AM,Economy
+9,770,New York,XNL,KTV,5/25/2025 12:00:00 AM,Economy
+10,426,London,AVE,TQZ,1/25/2025 12:00:00 AM,FirstClass
+11,459,Berlin,EXN,ZVU,11/25/2025 12:00:00 AM,Business
