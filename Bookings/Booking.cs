@@ -23,20 +23,38 @@ public class Booking
         Id = id;
         User = user;
         Flight = flight;
-        Status = BookingStatus.Confirmed;
+    }
+
+    public Booking(int id, User user, Flight flight, DateTime bookingDate, BookingStatus status)
+    {
+        Id = id;
+        Flight = flight;
+        User = user;
+        BookingDate = bookingDate;
+        Status = status;
     }
 
     public static Booking FromCsv(string csv)
     {
         string[] values = csv.Split(',');
-        Flight? flight = Flight.GetFlightByNumber(int.Parse(values[1]));
-        if (flight == null)
-            throw new Exception("Flight Not Found");
-        Booking booking = new(int.Parse(values[0]), User.GetUserById(int.Parse(values[2])), flight)
-        {
-            BookingDate = DateTime.Parse(values[3]),
-            Status = (BookingStatus)Enum.Parse(typeof(BookingStatus), values[4])
-        };
+
+        if (int.TryParse(values[0], out int bookingId))
+            throw new Exception("Invalid Booking ID");
+
+        if (int.TryParse(values[1], out int flightNumber))
+            throw new Exception("Invalid Flight Number");
+
+        if (int.TryParse(values[2], out int userId))
+            throw new Exception("Invalid User ID");
+
+        if (DateTime.TryParse(values[3], out DateTime bookingDate))
+            throw new Exception("Invalid Booking Date");
+
+        if (Enum.TryParse(values[4], out BookingStatus status))
+            throw new Exception("Invalid Booking Status");
+
+        Flight? flight = Flight.GetFlightByNumber(flightNumber) ?? throw new Exception("Flight Not Found");
+        Booking booking = new(bookingId, User.GetUserById(userId), flight, bookingDate, status);
         return booking;
     }
     public override string ToString()
