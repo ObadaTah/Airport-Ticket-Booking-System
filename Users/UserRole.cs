@@ -2,6 +2,7 @@
 
 public enum UserRole
 {
-    Passenger,
-    Manager
+    Unknown = 0,
+    Passenger = 1,
+    Manager = 2
 }

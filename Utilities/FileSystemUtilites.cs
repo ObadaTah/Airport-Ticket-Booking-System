@@ -1,6 +1,6 @@
-﻿namespace Airport_Ticket_Booking_System.Utilites;
+﻿namespace Airport_Ticket_Booking_System.Utilities;
 
-public static class FileSystemUtilites
+public static class FileSystemUtilities
 {
     public static string GetPath()
     {
@@ -33,7 +33,6 @@ public static class FileSystemUtilites
         }
     }
 
-
     public static Boolean CheckIfFileEmpty(string fileName)
     {
         string path = Path.Combine(GetPath(), "storage");
@@ -45,6 +44,7 @@ public static class FileSystemUtilites
         }
         return false;
     }
+
     public static void WriteToFile(string fileName, string data)
     {
         string path = Path.Combine(GetPath(), "storage");
@@ -67,7 +67,6 @@ public static class FileSystemUtilites
             }
         }
     }
-
 
     public static List<string> ReadFromFile(string fileName)
     {
@@ -97,5 +96,17 @@ public static class FileSystemUtilites
         {
             return 1;
         }
+    }
+
+    public static Boolean IsFileValid(string? fileAddress)
+    {
+        if (String.IsNullOrEmpty(fileAddress))
+            throw new Exception("Invalid File Address");
+        if (!File.Exists(fileAddress))
+        {
+            Console.WriteLine(fileAddress);
+            throw new Exception("File Doesn't Exist");
+        }
+        return true;
     }
 }
