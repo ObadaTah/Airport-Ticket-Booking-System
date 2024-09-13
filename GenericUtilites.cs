@@ -1,6 +1,4 @@
-﻿using Airport_Ticket_Booking_System.Users;
-
-namespace Airport_Ticket_Booking_System.Utilities;
+﻿namespace Airport_Ticket_Booking_System;
 
 public static partial class GenericUtilities
 {
@@ -52,7 +50,7 @@ public static partial class GenericUtilities
         Console.WriteLine("1. Filter Bookings");
         Console.WriteLine("2. Upload Flights");
         Console.WriteLine("3. Exit");
-        return GenericUtilities.AskValidInt(3);
+        return AskValidInt(3);
     }
 
     public static int PrintPassengerMenu()
@@ -60,7 +58,7 @@ public static partial class GenericUtilities
         Console.WriteLine("1. Book A Flight");
         Console.WriteLine("2. My Bookings");
         Console.WriteLine("3. Exit");
-        return GenericUtilities.AskValidInt(3);
+        return AskValidInt(3);
     }
 }
 

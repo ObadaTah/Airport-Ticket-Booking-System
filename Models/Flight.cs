@@ -1,6 +1,5 @@
-﻿using FluentValidation.Results;
-
-namespace Airport_Ticket_Booking_System.Flights;
+﻿using Airport_Ticket_Booking_System.Models.Enums;
+namespace Airport_Ticket_Booking_System.Models;
 
 public class Flight(int flightNumber, decimal price, string destination, string departureAirport, string arrivalAirport,
               DateTime departureDate, FlightClass @class)

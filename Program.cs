@@ -1,7 +1,7 @@
-﻿using Airport_Ticket_Booking_System.Bookings;
-using Airport_Ticket_Booking_System.Utilities;
-using Airport_Ticket_Booking_System.Users;
-using Airport_Ticket_Booking_System.Flights;
+﻿using Airport_Ticket_Booking_System.Models;
+using Airport_Ticket_Booking_System.Models.Enums;
+using Airport_Ticket_Booking_System.Services;
+using Airport_Ticket_Booking_System.Repositories;
 namespace Airport_Ticket_Booking_System;
 
 public class Program
@@ -54,7 +54,6 @@ public class Program
                 switch (passengerChoice)
                 {
                     case 1:
-                        Console.WriteLine("aaaaaa");
                         BookingService.BookFlight(user);
                         break;
                     case 2:

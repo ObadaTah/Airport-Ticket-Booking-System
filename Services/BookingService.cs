@@ -1,13 +1,13 @@
-﻿using Airport_Ticket_Booking_System.Flights;
-using Airport_Ticket_Booking_System.Users;
-using Airport_Ticket_Booking_System.Utilities;
+﻿using Airport_Ticket_Booking_System.Models;
+using Airport_Ticket_Booking_System.Models.Enums;
+using Airport_Ticket_Booking_System.Repositories;
 
-namespace Airport_Ticket_Booking_System.Bookings;
+namespace Airport_Ticket_Booking_System.Services;
 
 
 public static class BookingService
 {
-    public static void BookFlight(User user, Boolean printFlights = true)
+    public static void BookFlight(User user, bool printFlights = true)
     {
         if (printFlights)
             FlightService.PrintFlights();
@@ -88,7 +88,7 @@ public static class BookingService
         {
             try
             {
-                Booking booking = BookingService.FromCsv(s);
+                Booking booking = FromCsv(s);
                 if (booking.User.Email == user.Email)
                 {
                     if (booking.Flight.Class == FlightClass.Economy)

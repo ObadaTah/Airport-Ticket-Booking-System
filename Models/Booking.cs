@@ -1,7 +1,6 @@
-﻿using Airport_Ticket_Booking_System.Flights;
-using Airport_Ticket_Booking_System.Users;
+﻿using Airport_Ticket_Booking_System.Models.Enums;
 
-namespace Airport_Ticket_Booking_System.Bookings;
+namespace Airport_Ticket_Booking_System.Models;
 
 public class Booking
 {

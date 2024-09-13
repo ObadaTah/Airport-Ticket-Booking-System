@@ -1,6 +1,7 @@
-﻿using Airport_Ticket_Booking_System.Utilities;
+﻿using Airport_Ticket_Booking_System.Models;
+using Airport_Ticket_Booking_System.Services;
 
-namespace Airport_Ticket_Booking_System.Flights;
+namespace Airport_Ticket_Booking_System.Repositories;
 
 public static class FlightRepository
 {

@@ -1,18 +1,20 @@
-﻿using Airport_Ticket_Booking_System.Utilities;
-namespace Airport_Ticket_Booking_System.Users;
+﻿using Airport_Ticket_Booking_System.Models;
+using Airport_Ticket_Booking_System.Models.Enums;
+using Airport_Ticket_Booking_System.Repositories;
+namespace Airport_Ticket_Booking_System.Services;
 
 public static class UserService
 {
     public static User CheckUserCredintials(string? email, string? password)
     {
 
-        if (String.IsNullOrEmpty(email) || String.IsNullOrEmpty(password))
+        if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))
             throw new Exception("Invalid Data Entered Please Make Sure You Filled All The Fields");
 
         List<string> data = UserRepository.GetUsers();
         foreach (string s in data)
         {
-            User user = UserService.FromCsv(s);
+            User user = FromCsv(s);
             if (user.Email == email && user.Password == password)
             {
                 return user;
@@ -38,7 +40,7 @@ public static class UserService
         List<string> users = FileSystemUtilities.ReadFromFile("users.csv");
         foreach (string s in users)
         {
-            User user = UserService.FromCsv(s);
+            User user = FromCsv(s);
             if (user.Id == id)
                 return user;
         }
@@ -56,7 +58,7 @@ public static class UserService
 
     public static User RegisterUser(string? name, string? email, string? password)
     {
-        if (String.IsNullOrEmpty(name) || String.IsNullOrEmpty(email) || String.IsNullOrEmpty(password))
+        if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))
             throw new Exception("Invalid Data Entered Please Make Sure You Filled All The Fields");
         if (UserExists(email))
             throw new Exception("User With That Email Already Exists");
@@ -82,7 +84,7 @@ public static class UserService
         string? password = Console.ReadLine();
         try
         {
-            User user = UserService.CheckUserCredintials(email, password);
+            User user = CheckUserCredintials(email, password);
             return user;
 
         }
@@ -106,7 +108,7 @@ public static class UserService
 
         try
         {
-            User user = UserService.RegisterUser(name, email, password);
+            User user = RegisterUser(name, email, password);
             return user;
         }
         catch (Exception e)
@@ -116,17 +118,17 @@ public static class UserService
         }
     }
 
-    public static Boolean UserExists(string? email)
+    public static bool UserExists(string? email)
     {
-            List<string> data = FileSystemUtilities.ReadFromFile("users.csv");
-            foreach (string s in data)
+        List<string> data = FileSystemUtilities.ReadFromFile("users.csv");
+        foreach (string s in data)
+        {
+            User user = FromCsv(s);
+            if (user.Email == email)
             {
-                User user = UserService.FromCsv(s);
-                if (user.Email == email)
-                {
-                    return true;
-                }
+                return true;
             }
-            return false;
+        }
+        return false;
     }
 }

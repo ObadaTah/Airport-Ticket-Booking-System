@@ -1,7 +1,9 @@
-﻿using Airport_Ticket_Booking_System.Utilities;
+﻿using Airport_Ticket_Booking_System.Models;
+using Airport_Ticket_Booking_System.Models.Enums;
+using Airport_Ticket_Booking_System.Repositories;
 using FluentValidation.Results;
 
-namespace Airport_Ticket_Booking_System.Flights;
+namespace Airport_Ticket_Booking_System.Services;
 
 public static class FlightService
 {
@@ -39,7 +41,7 @@ public static class FlightService
         List<string> data = FileSystemUtilities.ReadFromFile("flights.csv");
         foreach (string s in data)
         {
-            Flight flight = FlightService.FromCsv(s);
+            Flight flight = FromCsv(s);
             if (flight.Class == FlightClass.Economy)
                 Console.ForegroundColor = ConsoleColor.Blue;
             if (flight.Class == FlightClass.FirstClass)
@@ -70,7 +72,7 @@ public static class FlightService
         List<string> data = FileSystemUtilities.ReadFromFile("flights.csv");
         foreach (string s in data)
         {
-            Flight flight = FlightService.FromCsv(s);
+            Flight flight = FromCsv(s);
             switch (choice)
             {
                 case 1:
@@ -79,27 +81,27 @@ public static class FlightService
                     break;
                 case 2:
                     if (flight.Price.ToString() == searchValue)
-                        FlightService.PrintFlight(flight);
+                        PrintFlight(flight);
                     break;
                 case 3:
                     if (flight.Destination == searchValue)
-                        FlightService.PrintFlight(flight);
+                        PrintFlight(flight);
                     break;
                 case 4:
                     if (flight.DepartureAirport == searchValue)
-                        FlightService.PrintFlight(flight);
+                        PrintFlight(flight);
                     break;
                 case 5:
                     if (flight.ArrivalAirport == searchValue)
-                        FlightService.PrintFlight(flight);
+                        PrintFlight(flight);
                     break;
                 case 6:
                     if (flight.DepartureDate.ToString() == searchValue)
-                        FlightService.PrintFlight(flight);
+                        PrintFlight(flight);
                     break;
                 case 7:
                     if (flight.Class.ToString() == searchValue)
-                        FlightService.PrintFlight(flight);
+                        PrintFlight(flight);
                     break;
             }
         }
@@ -121,7 +123,7 @@ public static class FlightService
         FlightValidator validator = new();
         ValidationResult results = validator.Validate(flight);
 
-        List<String> validationErrors = [];
+        List<string> validationErrors = [];
         if (!results.IsValid)
         {
             foreach (var failure in results.Errors)
@@ -139,7 +141,7 @@ public static class FlightService
         List<string> flights = FileSystemUtilities.ReadFromFile("flights.csv");
         foreach (string s in flights)
         {
-            Flight flight = FlightService.FromCsv(s);
+            Flight flight = FromCsv(s);
             if (flight.FlightNumber == flightNumber)
                 return flight;
         }

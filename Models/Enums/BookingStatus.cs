@@ -1,4 +1,4 @@
-﻿namespace Airport_Ticket_Booking_System.Bookings;
+﻿namespace Airport_Ticket_Booking_System.Models.Enums;
 
 public enum BookingStatus
 {

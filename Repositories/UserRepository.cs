@@ -1,6 +1,6 @@
-﻿using Airport_Ticket_Booking_System.Utilities;
+﻿using Airport_Ticket_Booking_System.Models;
 
-namespace Airport_Ticket_Booking_System.Users;
+namespace Airport_Ticket_Booking_System.Repositories;
 
 public static class UserRepository
 {
@@ -12,7 +12,7 @@ public static class UserRepository
 
     public static void SaveUser(User newUser)
     {
-        FileSystemUtilities.WriteToFile("users.csv", UserRepository.ToCsvFormat(newUser));
+        FileSystemUtilities.WriteToFile("users.csv", ToCsvFormat(newUser));
     }
 
     private static string ToCsvFormat(User user)
