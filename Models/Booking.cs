@@ -26,6 +26,7 @@ public class Booking
         User = user;
         BookingDate = bookingDate;
         Status = status;
+
     }
 
     public override string ToString()
