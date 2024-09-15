@@ -1,7 +1,8 @@
 ﻿using Airport_Ticket_Booking_System.Models;
 using Airport_Ticket_Booking_System.Models.Enums;
-using Airport_Ticket_Booking_System.Services;
+using Airport_Ticket_Booking_System.Presentation;
 using Airport_Ticket_Booking_System.Repositories;
+
 namespace Airport_Ticket_Booking_System;
 
 public class Program
@@ -13,22 +14,7 @@ public class Program
         string[] fileHeaders = { User.header, Flight.header, Booking.header };
         FileSystemUtilities.InitFiles(files, fileHeaders);
 
-        User user = new();
-        int choice = UserService.promptLoginRegister();
-
-        switch (choice)
-        {
-            case 1:
-                user = UserService.RequestLogin();
-                GenericUtilities.PrinSucc("Login Successful");
-                break;
-            case 2:
-                user = UserService.RequestRegister();
-                GenericUtilities.PrinSucc("Register Successful");
-                break;
-            case 3:
-                return;
-        }
+        User user = UserPresentation.GetUserByRegisterOrLogin();
 
         while (true)
         {
@@ -38,10 +24,10 @@ public class Program
                 switch (managerChoice)
                 {
                     case 1:
-                        FlightService.FilterFlights();
+                        FlightPresentation.SearchFlights();
                         break;
                     case 2:
-                        FlightService.UploadFlights();
+                        FlightPresentation.UploadFlightsFromFile();
                         break;
                     case 3:
                         return;
@@ -54,10 +40,10 @@ public class Program
                 switch (passengerChoice)
                 {
                     case 1:
-                        BookingService.BookFlight(user);
+                        BookingPresentation.BookFlight(user);
                         break;
                     case 2:
-                        BookingService.UsersBookings(user);
+                        BookingPresentation.GetUserBookings(user);
                         break;
                     case 3:
                         return;

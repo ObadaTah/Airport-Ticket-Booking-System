@@ -2,74 +2,39 @@
 using Airport_Ticket_Booking_System.Models.Enums;
 using Airport_Ticket_Booking_System.Repositories;
 using FluentValidation.Results;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Airport_Ticket_Booking_System.Services;
 
 public static class FlightService
 {
-    public static void UploadFlights()
+    public static void UploadFlights(string fileAddress)
     {
-        Console.WriteLine("Enter File Address:");
-        string? fileAddress = Console.ReadLine();
-        try
+        if (FileSystemUtilities.IsFileValid(fileAddress))
         {
-            if (FileSystemUtilities.IsFileValid(fileAddress))
+            try
+            {
                 FlightRepository.SaveFlightsFromFile(fileAddress);
-        }
-        catch (Exception e)
-        {
-            GenericUtilities.PrintError(e.Message);
-        }
-    }
 
-    public static void PrintFlight(Flight flight)
-    {
-        if (flight.Class == FlightClass.Economy)
-            Console.ForegroundColor = ConsoleColor.Blue;
-        if (flight.Class == FlightClass.FirstClass)
-            Console.ForegroundColor = ConsoleColor.DarkYellow;
-        if (flight.Class == FlightClass.Business)
-            Console.ForegroundColor = ConsoleColor.DarkGreen;
-        Console.WriteLine("=====================================================");
-        Console.WriteLine(flight.ToString());
-        Console.WriteLine("=====================================================");
-        Console.ResetColor();
-    }
+            }
+            catch (Exception e)
+            {
 
-    public static void PrintFlights()
-    {
-        List<string> data = FileSystemUtilities.ReadFromFile("flights.csv");
-        foreach (string s in data)
-        {
-            Flight flight = FromCsv(s);
-            if (flight.Class == FlightClass.Economy)
-                Console.ForegroundColor = ConsoleColor.Blue;
-            if (flight.Class == FlightClass.FirstClass)
-                Console.ForegroundColor = ConsoleColor.DarkYellow;
-            if (flight.Class == FlightClass.Business)
-                Console.ForegroundColor = ConsoleColor.DarkGreen;
-            Console.WriteLine("=====================================================");
-            Console.WriteLine(flight.ToString());
-            Console.WriteLine("=====================================================");
-            Console.ResetColor();
+                throw new Exception(e.Message);
+            }
         }
     }
 
-    public static void FilterFlights()
+    public static List<Flight> FilterFlights(int choice, string searchValue)
     {
-        Console.WriteLine("1. Flight Number");
-        Console.WriteLine("2. Price");
-        Console.WriteLine("3. Destination");
-        Console.WriteLine("4. Departuer Airport");
-        Console.WriteLine("5. Arrival Airport");
-        Console.WriteLine("6. Departure Date");
-        Console.WriteLine("7. Class");
-        Console.Write("What field do you want to search:");
+        var data = FileSystemUtilities.ReadFromFile("flights.csv");
 
-        int choice = GenericUtilities.AskValidInt(7);
-        Console.Write("Enter Search Value:");
-        string? searchValue = Console.ReadLine();
-        List<string> data = FileSystemUtilities.ReadFromFile("flights.csv");
+        return FindFlights(choice, searchValue, data);
+    }
+
+    private static List<Flight> FindFlights(int choice, string? searchValue, List<string> data)
+    {
+        List<Flight> flights = new();
         foreach (string s in data)
         {
             Flight flight = FromCsv(s);
@@ -77,34 +42,35 @@ public static class FlightService
             {
                 case 1:
                     if (flight.FlightNumber.ToString() == searchValue)
-                        Console.WriteLine(flight.ToString());
+                        flights.Add(flight);
                     break;
                 case 2:
                     if (flight.Price.ToString() == searchValue)
-                        PrintFlight(flight);
+                        flights.Add(flight);
                     break;
                 case 3:
                     if (flight.Destination == searchValue)
-                        PrintFlight(flight);
+                        flights.Add(flight);
                     break;
                 case 4:
                     if (flight.DepartureAirport == searchValue)
-                        PrintFlight(flight);
+                        flights.Add(flight);
                     break;
                 case 5:
                     if (flight.ArrivalAirport == searchValue)
-                        PrintFlight(flight);
+                        flights.Add(flight);
                     break;
                 case 6:
                     if (flight.DepartureDate.ToString() == searchValue)
-                        PrintFlight(flight);
+                        flights.Add(flight);
                     break;
                 case 7:
                     if (flight.Class.ToString() == searchValue)
-                        PrintFlight(flight);
+                        flights.Add(flight);
                     break;
             }
         }
+        return flights;
     }
 
     public static Flight FromCsv(string csv, int line = 1)

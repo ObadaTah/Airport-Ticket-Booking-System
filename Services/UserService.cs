@@ -46,15 +46,6 @@ public static class UserService
         }
         throw new Exception("User Not Found");
     }
-    public static int promptLoginRegister()
-    {
-        Console.WriteLine("1. Login");
-        Console.WriteLine("2. Register");
-        Console.WriteLine("3. Exit");
-
-
-        return GenericUtilities.AskValidInt(3);
-    }
 
     public static User RegisterUser(string? name, string? email, string? password)
     {
@@ -73,49 +64,6 @@ public static class UserService
         UserRepository.SaveUser(newUser);
 
         return newUser;
-    }
-
-    public static User RequestLogin()
-    {
-
-        Console.Write("Enter your Email: ");
-        string? email = Console.ReadLine();
-        Console.Write("Enter your password: ");
-        string? password = Console.ReadLine();
-        try
-        {
-            User user = CheckUserCredintials(email, password);
-            return user;
-
-        }
-        catch (Exception e)
-        {
-            GenericUtilities.PrintError(e.Message);
-            return RequestLogin();
-        }
-
-    }
-
-    public static User RequestRegister()
-    {
-
-        Console.Write("Enter your Name: ");
-        string? name = Console.ReadLine();
-        Console.Write("Enter your Email: ");
-        string? email = Console.ReadLine();
-        Console.Write("Enter your password: ");
-        string? password = Console.ReadLine();
-
-        try
-        {
-            User user = RegisterUser(name, email, password);
-            return user;
-        }
-        catch (Exception e)
-        {
-            GenericUtilities.PrintError(e.Message);
-            return RequestRegister();
-        }
     }
 
     public static bool UserExists(string? email)

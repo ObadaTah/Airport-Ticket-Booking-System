@@ -1,4 +1,5 @@
 ﻿using Airport_Ticket_Booking_System.Models;
+using Airport_Ticket_Booking_System.Presentation;
 using Airport_Ticket_Booking_System.Services;
 
 namespace Airport_Ticket_Booking_System.Repositories;
@@ -30,7 +31,7 @@ public static class FlightRepository
             }
             catch (Exception e)
             {
-                GenericUtilities.PrintError($"Error in Line {i + 2}: {e.Message}");
+                throw new Exception($"Error in Line {i + 2}: {e.Message}");
             }
 
         }

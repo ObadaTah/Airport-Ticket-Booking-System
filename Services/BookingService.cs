@@ -7,47 +7,22 @@ namespace Airport_Ticket_Booking_System.Services;
 
 public static class BookingService
 {
-    public static void BookFlight(User user, bool printFlights = true)
+    public static void BookFlight(User user, string userAnswer)
     {
-        if (printFlights)
-            FlightService.PrintFlights();
-        Console.Write("Enter Flight ID / Enter F for filtering:");
-        string? flightId = Console.ReadLine();
+        if (string.IsNullOrEmpty(userAnswer))
+            throw new ArgumentException("Invalid Flight ID");
 
-        if (string.IsNullOrEmpty(flightId))
-        {
-            GenericUtilities.PrintError("Invalid Flight ID");
-            BookFlight(user, false);
-            return;
-        }
-
-        if (flightId == "F")
-        {
-            FlightService.FilterFlights();
-            BookFlight(user, false);
-            return;
-
-        }
-
-        if (!int.TryParse(flightId, out int flightIdInt))
-        {
-            GenericUtilities.PrintError("Invalid Flight ID");
-            BookFlight(user, false);
-            return;
-
-        }
+        if (!int.TryParse(userAnswer, out int flightIdInt))
+            throw new ArgumentException("Invalid Flight ID");
 
         Dictionary<int, Flight> flights = FlightRepository.GetFlights();
+
         if (!flights.ContainsKey(flightIdInt))
         {
-            GenericUtilities.PrintError("Invalid Flight ID");
-            BookFlight(user, false);
-            return;
-
+            throw new ArgumentException("Invalid Flight ID");
         }
 
         BookingRepository.SaveBooking(user, flightIdInt, flights);
-        GenericUtilities.PrinSucc("Booked Successfully");
     }
 
     public static Booking FromCsv(string csv)
@@ -81,32 +56,8 @@ public static class BookingService
         return $"{booking.Id},{booking.Flight.FlightNumber},{booking.User.Id},{booking.BookingDate},{booking.Status}";
     }
 
-    public static void UsersBookings(User user)
+    public static List<string> UsersBookings(User user)
     {
-        List<string> data = BookingRepository.GetBookings();
-        foreach (string s in data)
-        {
-            try
-            {
-                Booking booking = FromCsv(s);
-                if (booking.User.Email == user.Email)
-                {
-                    if (booking.Flight.Class == FlightClass.Economy)
-                        Console.ForegroundColor = ConsoleColor.Blue;
-                    if (booking.Flight.Class == FlightClass.FirstClass)
-                        Console.ForegroundColor = ConsoleColor.DarkYellow;
-                    if (booking.Flight.Class == FlightClass.Business)
-                        Console.ForegroundColor = ConsoleColor.DarkGreen;
-                    Console.WriteLine("=====================================================");
-                    Console.WriteLine(booking.ToString());
-                    Console.WriteLine("=====================================================");
-                    Console.ResetColor();
-                }
-            }
-            catch (Exception e)
-            {
-                GenericUtilities.PrintError(e.Message);
-            }
-        }
+        return BookingRepository.GetBookings();
     }
 }
