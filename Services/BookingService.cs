@@ -7,12 +7,9 @@ namespace Airport_Ticket_Booking_System.Services;
 
 public static class BookingService
 {
-    public static void BookFlight(User user, string userAnswer)
+    public static void BookFlight(User user, string flightIdStr)
     {
-        if (string.IsNullOrEmpty(userAnswer))
-            throw new ArgumentException("Invalid Flight ID");
-
-        if (!int.TryParse(userAnswer, out int flightIdInt))
+        if (string.IsNullOrEmpty(flightIdStr) || !int.TryParse(flightIdStr, out int flightIdInt))
             throw new ArgumentException("Invalid Flight ID");
 
         Dictionary<int, Flight> flights = FlightRepository.GetFlights();

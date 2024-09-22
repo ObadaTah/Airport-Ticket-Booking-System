@@ -11,18 +11,7 @@ public static class FlightService
     public static void UploadFlights(string fileAddress)
     {
         if (FileSystemUtilities.IsFileValid(fileAddress))
-        {
-            try
-            {
-                FlightRepository.SaveFlightsFromFile(fileAddress);
-
-            }
-            catch (Exception e)
-            {
-
-                throw new Exception(e.Message);
-            }
-        }
+            FlightRepository.SaveFlightsFromFile(fileAddress);
     }
 
     public static List<Flight> FilterFlights(int choice, string searchValue)
