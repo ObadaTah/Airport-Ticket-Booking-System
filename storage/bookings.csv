@@ -4,3 +4,10 @@ bookingId,flightNumber,userId,bookingDate,status
 3,3,10,8/26/2024 1:11:53 PM,Confirmed
 4,3,11,8/26/2024 1:13:07 PM,Confirmed
 5,5,11,8/26/2024 1:21:34 PM,Confirmed
+6,13,11,9/11/2024 11:58:56 PM,Pending
+7,13,11,9/12/2024 12:02:16 AM,Pending
+8,13,11,9/12/2024 12:03:10 AM,Pending
+9,13,11,9/12/2024 12:04:59 AM,Pending
+10,13,11,9/12/2024 12:05:56 AM,Pending
+11,13,11,9/12/2024 12:07:26 AM,Pending
+12,13,11,9/12/2024 12:10:17 AM,Pending

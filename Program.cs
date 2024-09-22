@@ -1,7 +1,8 @@
-﻿using Airport_Ticket_Booking_System.Bookings;
-using Airport_Ticket_Booking_System.Utilites;
-using Airport_Ticket_Booking_System.Users;
-using Airport_Ticket_Booking_System.Flights;
+﻿using Airport_Ticket_Booking_System.Models;
+using Airport_Ticket_Booking_System.Models.Enums;
+using Airport_Ticket_Booking_System.Presentation;
+using Airport_Ticket_Booking_System.Repositories;
+
 namespace Airport_Ticket_Booking_System;
 
 public class Program
@@ -11,37 +12,22 @@ public class Program
 
         string[] files = { "users.csv", "flights.csv", "bookings.csv" };
         string[] fileHeaders = { User.header, Flight.header, Booking.header };
-        FileSystemUtilites.InitFiles(files, fileHeaders);
+        FileSystemUtilities.InitFiles(files, fileHeaders);
 
-        User user = new();
-        int choice = GenericUtilites.promptLoginRegister();
-
-        switch (choice)
-        {
-            case 1:
-                user = GenericUtilites.RequestLogin();
-                GenericUtilites.PrinSucc("Login Successful");
-                break;
-            case 2:
-                user = GenericUtilites.RequestRegister();
-                GenericUtilites.PrinSucc("Register Successful");
-                break;
-            case 3:
-                return;
-        }
+        User user = UserPresentation.GetUserByRegisterOrLogin();
 
         while (true)
         {
             if (user.Role == UserRole.Manager)
             {
-                int managerChoice = UserUtilites.PrinManagerMenu();
+                int managerChoice = GenericUtilities.PrinManagerMenu();
                 switch (managerChoice)
                 {
                     case 1:
-                        FlightUtilites.FilterFlights();
+                        FlightPresentation.SearchFlights();
                         break;
                     case 2:
-                        FlightUtilites.UploadFlights();
+                        FlightPresentation.UploadFlightsFromFile();
                         break;
                     case 3:
                         return;
@@ -50,14 +36,14 @@ public class Program
             }
             if (user.Role == UserRole.Passenger)
             {
-                int passengerChoice = UserUtilites.PrintPassengerMenu();
+                int passengerChoice = GenericUtilities.PrintPassengerMenu();
                 switch (passengerChoice)
                 {
                     case 1:
-                        BookingUtilites.BookFlight(user);
+                        BookingPresentation.BookFlight(user);
                         break;
                     case 2:
-                        BookingUtilites.UsersBookings(user);
+                        BookingPresentation.GetUserBookings(user);
                         break;
                     case 3:
                         return;
