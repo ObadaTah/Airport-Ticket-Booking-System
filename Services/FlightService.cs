@@ -10,7 +10,8 @@ public static class FlightService
 {
     public static void UploadFlights(string fileAddress)
     {
-        if (FileSystemUtilities.IsFileValid(fileAddress))
+        if (!FileSystemUtilities.IsFileValid(fileAddress))
+            return;
             FlightRepository.SaveFlightsFromFile(fileAddress);
     }
 
